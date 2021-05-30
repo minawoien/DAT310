@@ -1,0 +1,330 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+}
+
+#app {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+body {
+    background-color: #dfe2e4;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Styling for flere bokser */
+.pages, .companyP {
+    display: flex;
+    flex-wrap: wrap;
+    padding-top: 20px;
+}
+
+.pages, .companyP, .tittel, ul {
+    width: 85%;
+    margin: auto;
+}
+
+#comp, .pages{
+    flex: 1 0 auto; 
+    margin-bottom: 100px;
+}
+
+#footerbox, .fbox, .innlegg, .annonser, .login, .bedInfo, .publish, #deal, .adminDeal, .image {
+    background-color: #ffffff;
+}
+
+a {
+    color: #075564;
+}
+
+form p {
+    color: #049893;
+}
+
+/* Syling input fields from different pages */
+input, select, textarea, button{
+    width: 100%;
+    display: inline-block;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.bedInfo p, .bedInfo h3, input, select, textarea, button {
+    padding: 12px 20px;
+    margin: 8px 0;
+}
+
+input[type=submit]{
+    background-color: #74d2cc;
+}
+
+button {
+    background-color: #60a2a7;
+}
+
+.content, fieldset {
+    justify-content: space-between;
+}
+
+.center {
+    justify-content: center;
+}
+
+/* FOOTER */
+#footerbox {
+    border-top: 5px solid #74d2cc;
+    text-align: center;
+    display: flex;
+    flex-shrink: 0;
+    z-index: 1;
+}
+
+.fbox{
+    padding:3% 1%;
+    width: 330px;
+    font-size: 1em;
+    text-align: center;
+}
+
+.fbox a, .link{
+    color:#000000;
+}
+
+/* MAIN PAGE */
+#main{
+    position: absolute;
+    top:0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("/static/img/led_rom_blur.jpg");
+    background-repeat: no-repeat;
+    background-color: #dfe2e4;
+    background-size: cover;
+}
+
+#small{
+    position: absolute;
+    top: 35%;
+    left: 35%;
+}
+
+.right, .bedInfo img, #small, .annonser{
+    width: 30%;
+}
+
+#no {
+    min-height: 86%;
+}
+
+/* MENU */
+ul {
+    position: relative;
+    z-index:10;
+    list-style-type: none;
+}
+
+.link {
+    margin: 0 1.5%;
+    padding: 3% 0.5%;
+    padding-bottom: 1%;
+    font-size: 1.2em;
+    text-decoration: none;
+
+    /* Tatt fra w3schools */
+    background-image: linear-gradient(#049893, #049893);
+    background-size: 0 7px, auto;
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    transition: all .2s ease-out;
+}
+
+.router-link-active {
+    background-size: 100% 5px, auto;
+}
+
+.link:hover{
+    color: #74d2cc;
+}
+
+ul a img {
+    width: 150px;
+    padding: 1.5% 0;
+}
+
+
+/* STUDENT PAGE */
+.innlegg, .annonser, .login{
+    padding: 2%;
+    margin-bottom: 2%;
+}
+
+.innlegg, .publish {
+    width: 60%;
+}
+
+.innlegg h1, .annonser h1{
+    margin-bottom: 20px;
+}
+
+.post{
+    padding: 10px 0;
+    line-height: 1.7;
+    border-top: 1px solid #dfe2e4;
+}
+
+.annonser form {
+    padding: 3% 0;
+    top: 10px;
+}
+
+fieldset {
+    border: none;
+    display: flex;
+    width: 100%;
+    padding: 10px 10px;
+    box-sizing: border-box;
+}
+
+input[type=checkbox] {
+    margin-right: 5px;
+    width: 25px;
+}
+
+/* LOGIN PAGE */
+.login {
+    width: 45%;
+}
+
+#or {
+    border-bottom: 1px solid #ccc;
+    margin: 20px 16px;
+}
+
+
+/* MY PAGE */
+.bedInfo, .publish, .adminDeal {
+    padding: 3%;
+}
+
+.bedInfo, .deals div{
+    margin-bottom: 25px;
+}
+
+#deal {
+    padding: 10%;
+}
+
+.deals {
+    padding-top: 20px;
+}
+
+/* ADMIN */
+.adminDeal{
+    width: 25%;
+}
+
+/* COMPANY */
+#comp h1 {
+    text-align: center;
+    padding-top: 20px;
+}
+
+.image {
+    margin: 0 10px;
+    padding: 5px;
+    margin-bottom: 50px;
+}
+
+#desc, .image img  {
+    height: 100px;
+}
+
+/* Icon */
+.editIcon {
+    content: url('https://api.iconify.design/dashicons:edit.svg?height=20');
+}
+
+.deleteIcon {
+    content: url('https://api.iconify.design/fluent:delete-20-regular.svg?height=20');
+}
+
+#searchIcon{
+    content: url('https://api.iconify.design/ant-design:search-outlined.svg?height=20');
+}
+
+.removeIcon {
+    content: url('https://api.iconify.design/el:remove.svg?height=16');
+}
+
+#igIcon{
+    content: url('https://api.iconify.design/bx-bxl-instagram.svg?height=24');
+    width: 10%;
+}
+
+#fbIcon{
+    content: url('https://api.iconify.design/bx:bxl-facebook-circle.svg?height=24');
+    width: 10%;
+}
+
+#fbIcon, #igIcon, .editIcon, .removeIcon, #searchIcon, .deleteIcon {
+    vertical-align: -0.125em;
+}
+
+.removeIcon, #searchIcon, .deleteIcon, .bedInfo span, .bedInfo img, .link    {
+    float: right;
+}
+
+@media only screen and (max-width: 1000px) {
+
+    #no {
+        min-height: 89%;
+    }
+
+    #main{
+        background-position: 50%;
+    }
+
+    #main img{
+        width: 50%;
+        left: 25%;
+    }
+
+    .innlegg, .annonser, .publish, .right, .adminDeal{
+        width: 100%;
+    }
+
+    .login {
+        width: 70%
+    }
+
+    .publish, .innlegg, .deals div {
+        margin-bottom: 25px;
+    }
+
+    #deal {
+        padding: 5%;
+    }
+
+    .deals {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .deals div{
+        width: 45%;
+        padding-right: 5%;
+    }
+
+    ul a img {
+        width: 120px;
+    }
+
+}
