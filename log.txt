@@ -19,13 +19,5 @@ Post of type innlegg created with id 4.
 Deal of type Samarbeidsavtale created with id 1 for company with id 2.
 Deal of type Bedriftspresentasjon created with id 2 for company with id 2.
 Deal of type Samarbeidsavtale created with id 3 for company with id 1.
-Post of type innlegg created with id 5.
-no user with that user id company
-no image with that company
-User minamina created with id 5.
-Bedrift of Mina bed created with id 3, userid 5.
-Img with filename static/img/bedrifter/logo_3.png added to company 3.
-Bedrift information updated
-Img with filename static/img/bedrifter/kongsberg_2.jpg added to company 2.
-Bedrift information updated
-Post of type Heltid created with id 5.
+Post of type Deltid created with id 5.
+Post of type innlegg created with id 6.
