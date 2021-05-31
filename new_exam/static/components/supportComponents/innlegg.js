@@ -7,7 +7,7 @@ const annonseC = {
         <p>{{p.type}} i {{p.place}}</p>
         <p>Søknadsfrist: {{p.date}}</p>
         <p>{{ p.text }}</p>
-        <a href="p.link">{{p.link}}</a>
+        <a :href="p.link" target="_blank">{{p.link}}</a>
     </div>
 `,
     methods: {
@@ -27,7 +27,7 @@ const innleggC = {
         <p>Publisert av {{p.userid["firstname"]}} | {{p.userid["stilling"]}}</p>
         <p style="color: #60a2a7">{{p.date}}</p>
         <p>{{ p.text }}</p>
-        <a href="p.link">{{p.link}}</a>
+        <a :href="p.link" target="_blank">{{p.link}}</a>
     </div>
 `,
     methods: {
