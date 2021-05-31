@@ -27,7 +27,8 @@ Login:
 - Innloggede brukere har ikke tilgang til login-siden
 
 Logout:
-- Når brukeren logges ut sjules "Min side" eller "For styret" fra menyen. Session med brukernavn og rolle blir slettet.
+- Når brukeren logges ut sjules "Min side" eller "For styret" fra menyen.
+- Session med brukernavn og rolle blir slettet.
 - Blir sendt til "Hjem"
 - Filtrerings cookies blir slettet
 
@@ -42,7 +43,6 @@ For studenter - side:
 - Filtreringen blir lagret i en cookie, som slettes når en bruker logger ut, ellers er den satt permanent.
 - Admin kan slette innlegg og stillingsannonser
 - Innlegg sorteres etter nyeste publiseringsdato øverst
-- Stillingsannonser sorteres etter nyeste øverst
 
 MyPage - side:
 - Side for bedrifter, kommer opp i menyen dersom det er en innlogget bedrift
