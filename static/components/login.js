@@ -20,7 +20,7 @@ let loginC = {
                 <input type="text" name="name" v-model="name" placeholder="Bedriftnavn" required/><br />
                 <input type="email" name="mail" v-model="mail" placeholder="Mail" required/><br />
                 <input type="text" name="address" v-model="address" placeholder="Adresse" required/><br />
-                <input type="number" name="phone" v-model="phone" placeholder="Telfon" min="0" max="100000000" required/><br />
+                <input type="number" name="phone" v-model="phone" placeholder="Telfon" min="0" max="99999999" required/><br />
                 <input type="text" name="regUsername" v-model="regUsername" placeholder="Brukernavn" required/><br />
                 <input type="password" name="regPassword" v-model="regPassword" placeholder="Passord" required><br />
                 <input type="password" name="valPassword" v-model="valPassword" placeholder="Passord" required><br />
@@ -98,8 +98,7 @@ let loginC = {
             if (request.status == 200){
                 let result = await request.json();
                 if (result == "Sucess"){
-                    this.display = !this.display
-                    this.name = this.mail =  this.address = this.phone = this.filename = this.regUsername = this.regPassword = this.valPassword = null;
+                    this.showReg();
                 }else{
                     this.text = result;
                 }
@@ -107,6 +106,7 @@ let loginC = {
         },
         showReg: function(){
             this.display=!this.display;
+            this.name = this.mail =  this.address = this.phone = this.filename = this.regUsername = this.regPassword = this.valPassword = null;
         }
     }
 };

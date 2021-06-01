@@ -93,8 +93,6 @@ def register():
     # Legger til bedriften i bedrift-tabell
     add_company(conn, user_form["Bedriftnavn"], user_form["Telefon"], user_form["Adresse"], user_form["Mail"], id)
 
-    session["username"] = username
-    user = get_user_by_name(conn, username)
     return jsonify("Sucess")
 
 # Henter logget inn bedrift fra userid

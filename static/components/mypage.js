@@ -119,8 +119,8 @@ let mypageC = {
                 },
                 body: JSON.stringify({bid: this.comp.bid, Navn: this.name, Mail: this.mail, Adresse: this.address, Telefon: this.phone})
             });
-            // Hvis brukerinputen er ugyldig vises det en feilmelding, men hvis det var velykket, kalles getBed funksjoen
-            // for å oppdatere informasjonen som vises.
+            // Hvis brukerinputen er ugyldig vises det en feilmelding, men hvis den var gyldig kalles getBed funksjoen
+            // for å oppdatere bedriftinformasjonen som vises.
             if (request.status == 200){
                 let result = await request.json();
                 if (result == "Sucess"){
@@ -143,7 +143,7 @@ let mypageC = {
             })
             .then(response => response.json())
             // Hvis filoplastningen feiles vises en feilmelding, men hvis den var velykket kalles getBed funksjoen
-            // for å oppdatere informasjonen som vises. (Bildet vil bli opplastet hvis brukeren velger et bilde, men ikke 
+            // for å oppdatere bildet som vises. (Bildet vil bli opplastet hvis brukeren velger et bilde, men ikke 
             // trykker på ok knappen - den er for å endre bedriftsinformajsonen)
             .then(result => {
                 if (result == ""){

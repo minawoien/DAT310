@@ -62,7 +62,7 @@ let studentC = {
     methods: {
         // Oppdaterer hvilke innlegg som vises ved å nullstille listene med innlegg fra styret og stillingsannonser,
         // og legge til eksisterene innlegg i riktig liste ut i fra type
-        // Funksjonen blir kalt når admin sletter et innlegg, og hver gang siden åpnes (da det kan ha blitt lagt til flere innlegg)
+        // Funksjonen blir kalt når admin sletter et innlegg og hver gang siden åpnes (da det kan ha blitt lagt til flere innlegg)
         postType: function(){
             this.bedrifter = [];
             this.innlegg = [];
