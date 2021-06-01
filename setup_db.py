@@ -501,7 +501,7 @@ def setup():
     bed2 = add_company(conn, "Kongsberg Digital", 91999801, "Address 54", "mina@mail.com", bed_user2)
 
     # Add img to company
-    add_img(conn, "/static/img/bedrifter/img1.png", bed1)
+    add_img(conn, "static/img/bedrifter/img_1.jpeg", bed1)
 
     # Add posts
     # Stillingsannonser

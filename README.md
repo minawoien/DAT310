@@ -1,5 +1,4 @@
 For å kjøre nettsiden: 
-- Kjør setup_db.py
 - Kjør app.py
 
 Admin login:
@@ -62,6 +61,28 @@ Amdin - side
 - Viser avtaler med bedrifer, med navn, pris og datoer.
 
 Feilmeldinger og status fra setub_db.py blir lagt til i filen log.txt.
+
+# Adminbruker:
+- Se alle avtaler
+- Legge ut innlegg som kommer på student-siden
+- Slette innlegg og stillingsutlysninger
+- Se stillingsanonnser og filtrere de
+- Se innlegg
+
+# Med bedriftsbruker:
+- Lage bruker
+- Se avtaler med LED
+- Legge ut stillingsannonser som kommer på student-siden
+- Endre bedriftsinformasjon
+- Laste opp bilde
+- Se stillingsanonnser og filtrere de
+- Se innlegg
+
+# Uten bruker:
+- Se stillingsanonnser og filtrere de
+- Se innlegg
+- Lage bruker
+
 
 Fargepallett:
 #049893
