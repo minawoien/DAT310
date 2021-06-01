@@ -29,3 +29,40 @@ Bedrift information updated
 Img with filename static/img/bedrifter/kongsberg_2.jpg added to company 2.
 Bedrift information updated
 Post of type Heltid created with id 5.
+Post of type innlegg created with id 6.
+User deloite created with id 6.
+Bedrift of Deloite created with id 4, userid 6.
+User ny1 created with id 7.
+Bedrift of nyy created with id 5, userid 7.
+User kaffe created with id 8.
+Bedrift of Ny bedrift created with id 6, userid 8.
+User 123 created with id 9.
+Bedrift of lalal created with id 7, userid 9.
+User 1234 created with id 10.
+Bedrift of 123 created with id 8, userid 10.
+User vidar created with id 11.
+Bedrift of dfghjklø created with id 9, userid 11.
+User 12345 created with id 12.
+Bedrift of lkfj created with id 10, userid 12.
+table created
+table created
+table created
+table created
+table created
+User 253467 created with id 1.
+User 256461 created with id 2.
+Genette Vaage added to styret as Leder.
+Mina Woeien added to styret as Nestleder.
+User sopra created with id 3.
+User kongsberg created with id 4.
+Bedrift of Sopra Steria created with id 1, userid 3.
+Bedrift of Kongsberg Digital created with id 2, userid 4.
+Img with filename /static/img/bedrifter/img1.png added to company 1.
+Post of type Heltid created with id 1.
+Post of type Deltid created with id 2.
+Post of type innlegg created with id 3.
+Post of type innlegg created with id 4.
+Deal of type Samarbeidsavtale created with id 1 for company with id 2.
+Deal of type Bedriftspresentasjon created with id 2 for company with id 2.
+Deal of type Samarbeidsavtale created with id 3 for company with id 1.
+Deleted

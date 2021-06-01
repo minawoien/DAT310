@@ -28,8 +28,7 @@ def teardown_db(error):
 @app.route("/userdata", methods=["GET"])
 def userdata():
     if session.get("username", None):
-        username = session.get("username")
-        user = get_user_by_name(get_db(),username)
+        user = get_user()
         return user
     return jsonify("")
 
@@ -39,6 +38,7 @@ def logout():
     session.pop("role", None)
     return jsonify("")
 
+# Login funksjon som sjekker om det er en valid login og setter en session på brukernavn og rollen til brukeren
 @app.route("/login", methods=["GET", "POST"])
 def login():
     # if the form was submitted (otherwise we just display form)
@@ -62,8 +62,7 @@ def adminonly():
     conn = get_db()
     if not session.get("role", None) == "admin":
         return jsonify(False)
-    username = session["username"]
-    user = get_user_by_name(conn,username)
+    user = get_user()
     medlem = get_mld(conn, user["userid"])
     return jsonify(medlem)
 
@@ -99,8 +98,7 @@ def register():
 @app.route("/bedrift", methods=["GET"])
 def get_bedrift():
     conn = get_db()
-    username = session["username"]
-    user = get_user_by_name(conn,username)
+    user = get_user()
     company = get_company(conn, user["userid"])
     img = get_img_from_bid(conn, company["bid"])
     if img["filename"] != None:
@@ -114,14 +112,13 @@ def get_bedrift():
 def innlegg():
     if request.method == "POST":
         conn = get_db()
-        username = session["username"]
-        user = get_user_by_name(conn,username)
+        user = get_user()
         innlegg = request.get_json()
         for key in innlegg:
             text = validate_userinput(innlegg[key], key)
             if text != "Ok" and text != "":
                 return jsonify(text)
-        id = make_post(conn, innlegg["Beskrivelse"], innlegg["Dato"], user["userid"], innlegg["type"], innlegg["Sted"], innlegg["Lenke"], innlegg["Tittel"])
+        make_post(conn, innlegg["Beskrivelse"], innlegg["Dato"], user["userid"], innlegg["type"], innlegg["Sted"], innlegg["Lenke"], innlegg["Tittel"])
     return jsonify("Success")
 
 # Henter innlegg
@@ -134,11 +131,11 @@ def getInnlegg():
     return jsonify(innlegg)
 
 # Sletter innlegg eller stillingsannonser, returnerer innleggene
-@app.route("/delete", methods=["GET"])
+@app.route("/delete", methods=["POST"])
 def delete():
     conn = get_db()
-    post_id = request.args.get("post_id", "")
-    message = delete_post(conn, post_id)
+    post_id = request.get_json()
+    message = delete_post(conn, post_id["id"])
     innlegg = get_post(conn)
     innleggType(conn, innlegg)
     return jsonify(innlegg)
@@ -183,8 +180,7 @@ def upload():
     conn = get_db()
     # Get the logedin user and company for the user
     if session.get("username", None):
-        username = session.get("username")
-        user = get_user_by_name(get_db(),username)
+        user = get_user()
     company = get_company(conn, user["userid"])
     bid = company["bid"]
     # Get the uploaded file
@@ -208,7 +204,6 @@ def upload():
         path = get_img_from_bid(conn, bid)
         return jsonify(path["filename"])
     return jsonify("")
-
 
 @app.route("/", methods=["GET"])
 def index():

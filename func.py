@@ -1,4 +1,4 @@
-from flask import g
+from flask import g, session
 from setup_db import *
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 upload_forlder = "static/img/bedrifter/"
@@ -10,6 +10,11 @@ def get_db():
         g._database = sqlite3.connect("database.db")
     return g._database
 
+def get_user():
+    conn = get_db()
+    username = session.get("username")
+    return get_user_by_name(conn, username)
+    
 # Checks if username-password combination is valid
 def valid_login(username, password):
     conn = get_db()
@@ -19,6 +24,7 @@ def valid_login(username, password):
     return False
 
 # Funskjon som sjekker brukerinput
+# Alle input må ha mer enn 3 tegn, med unntak av telfon og passord som må ha 8.
 def validate_userinput(userinput, key):
     # List with special characters that are not allowed in input field
     avoid = ['#', '$', '%', '=', '{', '}', '[', ']', '\\', '*', '^', '¨', '~', '§', '>', '<']

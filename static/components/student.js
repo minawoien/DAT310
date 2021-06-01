@@ -82,7 +82,13 @@ let studentC = {
         },
         // Sletter innlegg eller annonse med gitt id og oppdaterer hvilke innlegg som vises i postType-funksjonen
         deletePost: async function(id){
-            let response = await fetch('/delete?post_id='+id);
+            let response = await fetch('/delete' ,{
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({'id': id})
+            });
             if (response.status == 200){
                 let result = await response.json();
                 this.posts = result;

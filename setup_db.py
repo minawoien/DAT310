@@ -366,10 +366,8 @@ def make_post(conn, text, date, user, type="innlegg", place="", link="", title="
         conn.commit()
     except Error as err:
         log_file("Error: {}".format(err))
-        return -1
     else:
         log_file("Post of type {} created with id {}.".format(type, cur.lastrowid))
-        return cur.lastrowid
     finally:
         cur.close()
 
@@ -392,6 +390,7 @@ def get_post(conn):
                 "title": title,
                 "userid": userid
             })
+        # Snur om rekkefølgen på postene for at de nyeste datoene kommer først
         if len(posts) > 1:
             posts = posts[::-1]
         return posts
