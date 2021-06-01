@@ -18,7 +18,7 @@ Brukerinput:
 Login:
 - Kan registrere bruker som bedrift
 - Logge inn som bedrift / admin
-- Passord må være minst 8 tegn ved registrering, det må fylles inn to ganger og de må være like. Vises feilmelding.
+- Alle feltene må være fylt inn. Passord må være minst 8 tegn ved registrering, det må fylles inn to ganger og de må være like.  Vises feilmelding.
 - Brukernavnet kan ikke være tatt. Vises feilmelding.
 - Ved innlogging vises feilmelding dersom brukernavnet ikke eksisterer eller passordet er feil.
 - Ved oppdatering av siden sjekkes det om det er en innlogget bruker. Forblir pålogget til brukeren er logget ut.
@@ -42,7 +42,6 @@ For studenter - side:
 - Filtreringen blir lagret i en cookie, som slettes når en bruker logger ut, ellers er den satt permanent.
 - Admin kan slette innlegg og stillingsannonser
 - Innlegg sorteres etter nyeste publiseringsdato øverst
-- Stillingsannonser sorteres etter nyeste øverst
 
 MyPage - side:
 - Side for bedrifter, kommer opp i menyen dersom det er en innlogget bedrift

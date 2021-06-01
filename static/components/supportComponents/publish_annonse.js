@@ -9,7 +9,7 @@ let publishC = {
         </select><br /> 
         <input type="text" name="place" v-model="place" placeholder="Sted" required /><br />
         <input type="date" name="date" v-model="date" placeholder="Søknadsfrist" required /><br />
-        <input type="text" name="link" v-model="link" placeholder="Lenke"><br />
+        <input type="text" name="link" v-model="link" placeholder="https://www.example.com"><br />
         <textarea id="desc" name="text" v-model="text" placeholder="Beskrivelse" required></textarea><br />
         <input type="submit" value="send">
         <p>{{validateTxt}}</p>

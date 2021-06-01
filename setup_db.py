@@ -454,7 +454,7 @@ def get_deals(conn):
     finally:
         cur.close()
 
-# Get deal by company id, returns the deal.
+# Get deals by company id, returns the deals.
 def get_deals_by_bid(conn, bid):
     cur = conn.cursor()
     try:

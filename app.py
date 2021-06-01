@@ -21,7 +21,6 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 def teardown_db(error):
     db = getattr(g, '_database', None)
     if db is not None:
-        print("close connection")
         db.close()
 
 # Check if there is a loggedin user

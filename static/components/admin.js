@@ -11,7 +11,7 @@ let adminC = {
             <p>Innlegget vil bli publisert under "For studenter"!</p>
             <form action="#" method="POST" v-on:submit="sendAnnonse" autocomplete="off">
                 <input type="text" name="title" v-model="title" placeholder="Tittel" required /><br />
-                <input type="text" name="link" v-model="link" placeholder="Lenke"><br />
+                <input type="text" name="link" v-model="link" placeholder="https://www.example.com"><br />
                 <textarea id="desc" name="text" v-model="text" placeholder="Beskrivelse" required ></textarea><br />
                 <input type="submit" value="send">
                 <p>{{validateTxt}}</p>

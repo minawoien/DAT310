@@ -6,7 +6,6 @@ upload_forlder = "static/img/bedrifter/"
 # Get database
 def get_db():
     if not hasattr(g, "_database"):
-        print("create connection")
         g._database = sqlite3.connect("database.db")
     return g._database
 
