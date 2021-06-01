@@ -505,8 +505,8 @@ def setup():
 
     # Add posts
     # Stillingsannonser
-    make_post(conn, "Vi i Sopra Steria soker nye fulltidsansatte. Mer informasjon paa linken!", "12.april 2021", bed_user1, "Heltid", "Asker")
-    make_post(conn, "Perfekt jobb for deg som liker aa programmere!", "23.juni 2021", bed_user2, "Deltid", "Stavanger")
+    make_post(conn, "Vi i Sopra Steria soker nye fulltidsansatte. Mer informasjon paa linken!", "2021-04-12", bed_user1, "Heltid", "Asker")
+    make_post(conn, "Perfekt jobb for deg som liker aa programmere!", "2021-06-23", bed_user2, "Deltid", "Stavanger")
     
     # Innlegg
     make_post(conn, "Hei, alle Data og elektro studenter! Har DU lyst å være med på Wings for Life World Run og få en goodiebag?️ Søndag 9. mai kl 13:00 går startskuddet for Wings for Life World Run 2021. Wings for Life World Run er verdens eneste globale veldedighetsløp der startskuddet går likt over hele kloden. 100% av deltakeravgiften går direkte til organisasjonen Wings for Life som jobber med å gjøre ryggmargskader kurerbare. Meld deg på her:", "2021/05/04", leder, "innlegg", "", "https://www.wingsforlifeworldrun.com/en/locations/app", "Wings For Life")

@@ -50,6 +50,7 @@ For studenter - side:
     - Filtreringen blir lagret i en cookie, som slettes når en bruker logger ut, ellers er den satt permanent.
 - Admin kan slette innlegg og stillingsannonser
 - Innlegg sorteres etter nyeste publiseringsdato øverst
+- Stillingsannonser sorteres etter tidligste søknadsfrist øverst
 
 MyPage - side:
 - Side for bedrifter, kommer opp i menyen dersom det er en innlogget bedrift
