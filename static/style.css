@@ -1,0 +1,309 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #dfe2e4;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.pages, .companyP {
+    display: flex;
+    flex-wrap: wrap;
+    margin: auto;
+    width: 85%;
+    padding-top: 20px;
+}
+
+#footerbox, .fbox, .innlegg, .annonser, .login, .bedInfo, .publish, #deal, .adminDeal, .image {
+    background-color: #ffffff;
+}
+
+a {
+    color: #075564
+
+}
+
+/* Syling input fields from different pages */
+
+input, select, textarea, button{
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type=submit]{
+    background-color: #74d2cc;
+}
+
+button {
+    background-color: #60a2a7;
+}
+
+/* Main page and student */
+.content, fieldset {
+    justify-content: space-between;
+}
+
+.center {
+    justify-content: center;
+}
+
+/* FOOTER */
+
+#footerbox {
+    border-top: 5px solid #74d2cc;
+    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 100px;
+}
+
+.fbox{
+    padding:3% 1%;
+    width: 330px;
+    font-size: 1em;
+    text-align: center;
+}
+
+.fbox a{
+    color:#000000;
+}
+
+/* MAIN PAGE */
+
+#main{
+    position: absolute;
+    top:0;
+    bottom: 0;
+    width: 100%;
+    background-image: url("/static/img/led_rom_blur.jpg");
+    background-repeat: no-repeat;
+    background-color: #dfe2e4;
+    background-size: cover;
+}
+
+#main img{
+    position: relative;
+    top: 35%;
+    left: 35%;
+    width: 30%;
+}
+
+/* MENU */
+ul {
+    position: relative;
+    z-index:10;
+    list-style-type: none;
+    width: 85%;
+    margin: auto;
+}
+
+.link {
+    margin: 0 1.5%;
+    padding: 3% 0.5%;
+    padding-bottom: 1%;
+    font-size: 1.2em;
+    text-decoration: none;
+    color: #000000;
+
+    /* Tatt fra w3schools */
+    background-image: linear-gradient(#049893, #049893);
+    background-size: 0 7px, auto;
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    transition: all .2s ease-out;
+}
+
+.router-link-active {
+    /* border-bottom: 7px solid #049893; */
+    background-size: 100% 5px, auto;
+}
+
+.link:hover{
+    /* background-size: 100% 5px, auto; */
+    color: #74d2cc;
+}
+
+ul a img {
+    width: 150px;
+    padding: 1.5% 0;
+}
+
+
+/* STUDENT PAGE */
+
+/* Innlegg */
+
+.innlegg, .annonser, .login{
+    padding: 2%;
+}
+
+.innlegg {
+    width: 60%;
+}
+
+.annonser {
+    width: 30%;
+}
+
+.post{
+    padding: 10px 0;
+    line-height: 1.7;
+}
+
+.annonser form {
+    padding: 3% 0;
+    top: 10px;
+}
+
+fieldset {
+    border: none;
+    display: flex;
+    width: 100%;
+    padding: 10px 20px;
+    box-sizing: border-box;
+}
+
+input[type=checkbox] {
+    margin-right: 5px;
+}
+
+
+/* LOGIN PAGE */
+.login {
+    width: 45%;
+}
+
+#or {
+    border-bottom: 1px solid #ccc;
+    margin: 20px 16px;
+}
+
+
+/* MY PAGE */
+.bedInfo, .publish, #deal {
+    padding: 3%;
+}
+
+.publish {
+    width: 60%;
+}
+
+.bedInfo{
+    margin-bottom: 20px;
+}
+
+.bedInfo p, .bedInfo h3 {
+    padding: 12px 20px;
+    margin: 8px 0;
+}
+
+.right, .bedInfo img {
+    width: 30%;
+}
+
+#deal {
+    padding: 10%;
+}
+
+
+/* ADMIN */
+.adminDeal{
+    width: 25%;
+    padding: 3%;
+}
+
+.tittel {
+    width: 85%;
+    margin: auto;
+}
+
+/* COMPANY */
+#comp h1 {
+    text-align: center;
+    padding-top: 20px;
+}
+
+.image {
+    margin: 0 10px;
+    padding: 5px;
+    margin-bottom: 50px;
+}
+
+#desc, .image img  {
+    height: 100px;
+}
+
+
+/* Icon */
+.editIcon {
+    content: url('https://api.iconify.design/dashicons:edit.svg?height=20');
+}
+
+.deleteIcon {
+    content: url('https://api.iconify.design/fluent:delete-20-regular.svg?height=20');
+}
+
+#searchIcon{
+    content: url('https://api.iconify.design/ant-design:search-outlined.svg?height=20');
+}
+
+.removeIcon {
+    content: url('https://api.iconify.design/el:remove.svg?height=16');
+}
+
+#igIcon{
+    content: url('https://api.iconify.design/bx-bxl-instagram.svg?height=24');
+    width: 10%;
+}
+
+#fbIcon{
+    content: url('https://api.iconify.design/bx:bxl-facebook-circle.svg?height=24');
+    width: 10%;
+}
+
+#fbIcon, #igIcon, .editIcon, .removeIcon, #searchIcon, .deleteIcon {
+    vertical-align: -0.125em;
+}
+
+.removeIcon, #searchIcon, .deleteIcon, .bedInfo span, .bedInfo img, .link    {
+    float: right;
+}
+
+
+@media only screen and (max-width: 800px) {
+
+    #main{
+        background-position: 50%;
+    }
+
+    #main img{
+        width: 50%;
+        left: 25%;
+    }
+
+}
+
+@media only screen and (max-width: 600px) {
+    .innlegg, .annonser, .publish, .right{
+        width: 90%;
+        margin: auto;
+        margin-bottom: 20px;
+        padding: 3%;
+    }
+
+    #main{
+        background-position: 50%;
+    }
+
+    #main img{
+        width: 80%;
+        left: 10%;
+    }
+}
