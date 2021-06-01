@@ -1,34 +1,43 @@
-For å kjøre nettsiden: 
+# For å kjøre nettsiden: 
 - Kjør app.py
 
-Admin login:
-Brukernavn: 256461
-Passord: 123
 
-Bedrift login:
-Brukernavn: kongsberg
-Passord: 1234
+# Lagde brukere 
+- Admin login:
+    Brukernavn: 256461
+    Passord: 123
 
-Brukerinput:
-- All brukerinput blir sjekket i en funksjon
-- Spesialtegn er ikke tillatt og alle felt må ha mer enn tre tegn
-- Viser feilmelding
+    Brukernavn: 253467
+    Passord: 123
 
-Login:
-- Kan registrere bruker som bedrift
+- Bedrift login:
+    Brukernavn: kongsberg
+    Passord: 1234
+
+    Brukernavn: sopra
+    Passord: 123
+
+
+# Sider
+Login - side:
+* Login:
 - Logge inn som bedrift / admin
-- Alle feltene må være fylt inn. Passord må være minst 8 tegn ved registrering, det må fylles inn to ganger og de må være like.  Vises feilmelding.
-- Brukernavnet kan ikke være tatt. Vises feilmelding.
+- Alle feltene må være fylt inn. 
 - Ved innlogging vises feilmelding dersom brukernavnet ikke eksisterer eller passordet er feil.
-- Ved oppdatering av siden sjekkes det om det er en innlogget bruker. Forblir pålogget til brukeren er logget ut.
+- Ved oppdatering av siden sjekkes det om det er en innlogget bruker.
+    - Innloggede brukere har ikke tilgang til login-siden
+    - Sender brukeren til /404 hvis det er en innlogget bruker
+    - Forblir pålogget til brukeren er logget ut.
 - Blir sendt til "Min side" eller "For styret", avhengig om det er en admin eller vanlig bruker.
-- En admin har ikke tilgang til "Min side" og bedriftbrukere har ikke tilgang til "For styret".
-- Innloggede brukere har ikke tilgang til login-siden
+    - En admin har ikke tilgang til "Min side" og bedriftbrukere har ikke tilgang til "For styret".
 
-Logout:
-- Når brukeren logges ut sjules "Min side" eller "For styret" fra menyen. Session med brukernavn og rolle blir slettet.
-- Blir sendt til "Hjem"
-- Filtrerings cookies blir slettet
+* Registering:
+- Kan registrere bruker som bedrift
+- Alle feltene må være fylt inn. 
+- Passord må være minst 8 tegn ved registrering, det må fylles inn to ganger og de må være like. Vises feilmelding.
+- Brukernavnet kan ikke være tatt. Vises feilmelding.
+- Innloggede brukere har ikke tilgang til registrering
+    - Sender brukeren til /404
 
 Bedrift - side:
 - Bildene til bedrift brukerene som har enten samarbeidsavtale eller bedriftspersentasjon blir lagt til på denne siden, og sortert ut i fra type avtale.
@@ -37,39 +46,51 @@ For studenter - side:
 - Innlegg som admin kan publisere på "admin-side" blir publisert under Innlegg
 - Stillingsannonser som bedrifter kan publisere på "myPage" blir publisert under Stillingsannonser.
 - Ved å trykke på søk-ikonet kan man filtrere stillingsannonser
-- Kan filtrere stillingsannonsene på søk i tekst, bedriftnavn og stillingstype.
-- Filtreringen blir lagret i en cookie, som slettes når en bruker logger ut, ellers er den satt permanent.
+    - Kan filtrere stillingsannonsene på søk i tekst, bedriftnavn og stillingstype.
+    - Filtreringen blir lagret i en cookie, som slettes når en bruker logger ut, ellers er den satt permanent.
 - Admin kan slette innlegg og stillingsannonser
 - Innlegg sorteres etter nyeste publiseringsdato øverst
 
 MyPage - side:
 - Side for bedrifter, kommer opp i menyen dersom det er en innlogget bedrift
 - Kan legge ut stillingsannonser som publiseres på "For studenter"
-- Bedriftsnavn blir lagt til i annonsen uten å måtte fylles inn
-- Alle feltene, uten om lenke, må fylles ut. Brukerinput blir sjekket - viser feilmelding.
+    - Bedriftsnavn blir lagt til i annonsen uten å måtte fylles inn
+    - Alle feltene, uten om lenke, må fylles ut. Brukerinput blir sjekket - viser feilmelding.
 - Bedrifts informasjon vises på siden. 
 - Ved å trykke på redigerings-ikonet kan brukeren redigere bedriftsinformasjon og laste opp et bilde.
-- Bildet blir lagret som en fil med bedriftens id, og pathen lagres i databasen.
-- Alle feltene blir sjekket, men må ikke endres. Brukerinput blir sjekket - viser feilmelding.
+    - Bildet blir lagret som en fil med bedriftens id, og pathen lagres i databasen.
+    - Hvis brukeren ikke har lastet opp et bilde vises et "last opp"-bilde som default
+    - Alle feltene blir sjekket ved redigering, men må ikke endres. Brukerinput blir sjekket - viser feilmelding.
 - Viser avtalene med LED og ISI, startdato og sluttdato. Prosent for hvor lenge avtalen er vart vises ut i fra dagens dato, startdato og sluttdato.
 
 Amdin - side
 - Side for admin, kommer opp i menyen dersom det er en innlogget amdin. Kun admin kan se innholdet på denne siden
 - Kan legge ut innlegg som publiseres på "For studenter"
-- Navn, dagens dato og styretittel blir lagt til uten å måtte fylles inn
-- Alle feltene, uten om lenke, må fylles ut. Brukerinput blir sjekket - viser feilmelding.
+    - Navn, dagens dato og styretittel blir lagt til uten å måtte fylles inn
+    - Alle feltene, uten om lenke, må fylles ut. Brukerinput blir sjekket - viser feilmelding.
 - Viser avtaler med bedrifer, med navn, pris og datoer.
 
-Feilmeldinger og status fra setub_db.py blir lagt til i filen log.txt.
+Logout:
+- Når brukeren logges ut sjules "Min side" eller "For styret" fra menyen. Session med brukernavn og rolle blir slettet.
+- Blir sendt til "Hjem"
+- Filtrerings cookies blir slettet
 
-# Adminbruker:
+
+# Brukerinput:
+- All brukerinput blir sjekket i en funksjon
+- Spesialtegn er ikke tillatt og alle felt må ha mer enn tre tegn
+- Viser feilmelding
+
+
+# Brukere
+Adminbruker:
 - Se alle avtaler
 - Legge ut innlegg som kommer på student-siden
 - Slette innlegg og stillingsutlysninger
 - Se stillingsanonnser og filtrere de
 - Se innlegg
 
-# Med bedriftsbruker:
+Med bedriftsbruker:
 - Lage bruker
 - Se avtaler med LED
 - Legge ut stillingsannonser som kommer på student-siden
@@ -78,13 +99,23 @@ Feilmeldinger og status fra setub_db.py blir lagt til i filen log.txt.
 - Se stillingsanonnser og filtrere de
 - Se innlegg
 
-# Uten bruker:
+Uten bruker:
 - Se stillingsanonnser og filtrere de
 - Se innlegg
 - Lage bruker
 
 
-Fargepallett:
+# I databasen som blir lagd når setup_db.py kjøres og databasen blir lagd
+- Fire brukere
+- To adminbrukere med et innlegg hver
+- To bedrifter med en stillingsannonse hver
+- Sopra Steria bedriften har et opplastet bilde. Kongsberg Digital har ikke et lastet opp bilde
+- En bedriftspresentasjon-avtale med Kongsberg Digital
+- En samarbeidsavtale med Kongsberg Digital og en med Sopra Steria
+
+Feilmeldinger og status fra setub_db.py blir lagt til i filen log.txt.
+
+# Fargepallett:
 #049893
 #075564
 #dfe2e4
