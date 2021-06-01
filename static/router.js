@@ -1,4 +1,3 @@
-
 const routes = [
     { path: '/', component: mainC},
     { path: '/studenter', component: studentC},
@@ -6,6 +5,7 @@ const routes = [
     { path: '/minSide', component: mypageC},
     { path: '/logginn', component: loginC},
     { path: '/styret', component: adminC},
+    { path: '/404', component: errorC}
 ];
 
 
@@ -25,6 +25,7 @@ let app = Vue.createApp({
             }
         }
     },
+    // Sjekker om det er en innlogget bruker, lagret i session, ved oppdatering av siden
     created: async function(){
         let response = await fetch('/userdata');
         if (response.status == 200){
@@ -35,6 +36,7 @@ let app = Vue.createApp({
         }
     },
     methods: {
+        // Fjerner bruker i vue og flask, og sletter filtreings cookie ved utlogging
         logout: async function(){
             let response = await fetch('/logout');
             if (response.status == 200){
@@ -43,6 +45,7 @@ let app = Vue.createApp({
                             "username": null,
                             "role": null
                             };
+                document.cookie = "list=; expires=Thu, 01 Jan 1970 00:00:00 UTC;"
                 router.push("/")
             }
         }
@@ -59,4 +62,6 @@ app.component("annonse", annonseC);
 app.component("innlegg", innleggC);
 app.component("top-menu", menuC);
 app.component("footerbox", footerC);
+app.component("publish-annonse", publishC);
+app.component("error", errorC);
 app.mount('#app');

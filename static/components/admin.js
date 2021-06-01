@@ -19,12 +19,13 @@ let adminC = {
         </div>
         <div class="adminDeal post">
             <h1>LED avtaler</h1>
-            <div v-for="deal in avtaler">
-                <h4>{{deal.type}} - {{deal.bid["name"]}}</h4>
-                <p>Med {{deal.owner}}.</p>
-                <p>Avtalt pris: {{deal.price}}</p>
-                <p>{{deal.start_date}} - {{deal.end_date}}</p>
-                <br>
+            <div class="deals">
+                <div v-for="deal in avtaler">
+                    <h4>{{deal.type}} - {{deal.bid["name"]}}</h4>
+                    <p>Med {{deal.owner}}.</p>
+                    <p>Avtalt pris: {{deal.price}}</p>
+                    <p>{{deal.start_date}} - {{deal.end_date}}</p>
+                </div>
             </div>
         </div>
     </div>
@@ -40,23 +41,25 @@ let adminC = {
         }
     },
     created: async function(){
+        // Henter admin-brukeren. Hvis det ikke er en adminbruker som er logget inn, blir brukeren sendt til /404
         let response = await fetch('/admin');
         if (response.status == 200){
             let result = await response.json();
             if (result){
                 this.styret = result;
             }else{
-                router.push("/")
+                router.push("/404")
             }
         }
+        // Henter LED sine avtaler med bedrifter
         let request = await fetch('/alleAvtaler');
         if (request.status == 200){
             let result = await request.json();
             this.avtaler = result
         }
-
     },
     methods: {
+        // Lager et innlegg
         sendAnnonse: async function(event){
             event.preventDefault();
             var currentDateWithFormat = new Date().toJSON().slice(0,10).replace(/-/g,'/');
@@ -67,6 +70,8 @@ let adminC = {
                 },
                 body: JSON.stringify({Lenke: this.link, Beskrivelse: this.text, type: "innlegg", Dato: currentDateWithFormat, Sted: null, Tittel:this.title})
             });
+            // Hvis brukerinput var godkjent blir brukeren sendt til /studenter hvor innlegget blir publisert. Hvis det ikke er 
+            // godkjent vises feilmeldingen.
             if (request.status == 200){
                 result = await request.json();
                 if (result == "Success"){
@@ -74,9 +79,7 @@ let adminC = {
                 }else{
                     this.validateTxt = result;
                 }
-                
             }
-            // Videreføre til student for å se stillingsannonsen?
         }
     },
 };

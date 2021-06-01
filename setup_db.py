@@ -1,9 +1,9 @@
-import sqlite3
+import sqlite3, os
 from sqlite3 import Error
 from flask import Flask, flash
 from werkzeug.security import generate_password_hash, check_password_hash
 
-# Styret listed in dictionary with list
+# Styremedlemer i en dictionary for å enkelt kunne legge til eller endre medlemer
 STYRET = {
             "Leder": ["253467","Genette", "Vaage", "Leder"],
             "Nestleder": ["256461", "Mina", "Woeien", "Nestleder"]
@@ -61,6 +61,11 @@ table_post = """CREATE TABLE innlegg(
                     FOREIGN KEY (userid) REFERENCES users (userid)
                 );"""
 
+def log_file(text):
+    with open("log.txt", "a") as myfile:
+        myfile.write(text)
+        myfile.write("\n")
+
 # Create connection
 def create_connection(db_file):
     conn = None
@@ -68,7 +73,7 @@ def create_connection(db_file):
         conn = sqlite3.connect(db_file)
         return conn
     except Error as e:
-        print(e)
+        log_file(str(e))
     return conn
 
 # Create tabels
@@ -76,10 +81,12 @@ def create_table(conn, table):
     try:
         cur = conn.cursor()
         cur.execute(table)
-        print("table created")
+        log_file("table created")
     except Error as e:
-        print(e)
+        log_file(str(e))
 
+
+# ---- USERS ----
 # Add users to database
 def add_user(conn, username, hash, role="user"):
     cur = conn.cursor()
@@ -88,10 +95,10 @@ def add_user(conn, username, hash, role="user"):
         cur.execute(sql, (username, hash, role))
         conn.commit()
     except Error as err:
-        print("Error: {}".format(err))
+        log_file("Error: {}".format(err))
         return -1
     else:
-        print("User {} created with id {}.".format(username, cur.lastrowid))
+        log_file("User {} created with id {}.".format(username, cur.lastrowid))
         return cur.lastrowid
     finally:
         cur.close()
@@ -104,21 +111,20 @@ def get_user_by_name(conn, username):
         cur.execute(sql, (username,))
         for row in cur:
             (id,name,role) = row
-            print(row)
             return {
                 "username": name,
                 "userid": id,
                 "role": role
             }
         else:
-            print("no user with that name")
+            log_file("no user with that name")
             return {
                 "username": username,
                 "userid": None,
                 "role": None
             }
     except Error as err:
-        print("Error: {}".format(err))
+        log_file("Error: {}".format(err))
     finally:
         cur.close()
 
@@ -134,22 +140,24 @@ def get_hash_for_login(conn, username):
         else:
             return None
     except Error as err:
-        print("Error: {}".format(err))
+        log_file("Error: {}".format(err))
     finally:
         cur.close()
 
+
+# ---- COMPANY ----
 # Adds the users company to database
-def add_company(conn, name, phone, address, mail, filename, id):
+def add_company(conn, name, phone, address, mail, id):
     cur = conn.cursor()
     try:
-        sql = ("INSERT INTO bedrift (name, phone_numb, mail, address, filename, userid) VALUES (?,?,?,?,?,?)")
-        cur.execute(sql, (name, phone, mail, address, filename, id))
+        sql = ("INSERT INTO bedrift (name, phone_numb, mail, address, userid) VALUES (?,?,?,?,?)")
+        cur.execute(sql, (name, phone, mail, address, id))
         conn.commit()
     except Error as err:
-        print("Error: {}".format(err))
+        log_file("Error: {}".format(err))
         return -1
     else:
-        print("Bedrift of {} created with id {}, userid {}.".format(name, cur.lastrowid, id))
+        log_file("Bedrift of {} created with id {}, userid {}.".format(name, cur.lastrowid, id))
         return cur.lastrowid
     finally:
         cur.close()
@@ -173,7 +181,7 @@ def get_company(conn, userid):
                 "userid": userid
             }
         else:
-            print("no user with that user id company")
+            log_file("no user with that user id company")
             return {
                 "bid": None,
                 "name": None,
@@ -184,10 +192,11 @@ def get_company(conn, userid):
                 "userid": userid
             }
     except Error as err:
-        print("Error: {}".format(err))
+        log_file("Error: {}".format(err))
     finally:
         cur.close()
 
+# Get company information from bedriftid
 def get_company_by_bid(conn, bid):
     cur = conn.cursor()
     try:
@@ -205,7 +214,7 @@ def get_company_by_bid(conn, bid):
                 "userid": userid
             }
         else:
-            print("no user with that user id company")
+            log_file("no user with that user id company")
             return {
                 "bid": bid,
                 "name": None,
@@ -216,40 +225,78 @@ def get_company_by_bid(conn, bid):
                 "userid": None
             }
     except Error as err:
-        print("Error: {}".format(err))
+        log_file("Error: {}".format(err))
     finally:
         cur.close()
 
-
-def edit_company_info(conn, bid, name, phone_numb, mail, address, filename):
+# Change the company information
+def edit_company_info(conn, bid, name, phone_numb, mail, address):
     cur = conn.cursor()
     try:
-        sql = ("UPDATE bedrift SET name = ?, phone_numb = ?, mail = ?, address = ?, filename = ? WHERE bid = ?")
-        cur.execute(sql, (name, phone_numb, mail, address, filename, bid))
+        sql = ("UPDATE bedrift SET name = ?, phone_numb = ?, mail = ?, address = ? WHERE bid = ?")
+        cur.execute(sql, (name, phone_numb, mail, address, bid))
         conn.commit()
     except Error as err:
-        print("Error: {}".format(err))
+        log_file("Error: {}".format(err))
     else:
-        print("Bedrift information updated")
+        log_file("Bedrift information updated")
     finally:
         cur.close()
 
+# Add image-path to the company table from the company id
+def add_img(conn, filename, bid):
+    cur = conn.cursor()
+    try:
+        sql = ("UPDATE bedrift SET filename = ? WHERE bid = ?")
+        cur.execute(sql, (filename, bid))
+        conn.commit()
+    except Error as err:
+        log_file("Error: {}".format(err))
+    else:
+        log_file("Img with filename {} added to company {}.".format(filename, bid))
+    finally:
+        cur.close()
 
+# Get the image-path from company id
+def get_img_from_bid(conn, bid):
+        cur = conn.cursor()
+        try:
+            sql = ("SELECT filename, bid FROM bedrift WHERE bid = ?")
+            cur.execute(sql, (bid,))
+            for row in cur:
+                (filename, bid) = row
+                return {
+                    "bid": bid,
+                    "filename": filename
+                }
+            else:
+                log_file("no image with that company")
+                return {
+                    "bid": bid,
+                    "filename": None
+                }
+        except Error as err:
+            log_file("Error: {}".format(err))
+        finally:
+            cur.close()
+
+
+# ---- STYRET ----
 # Add users as styret (admin) to the database, only done static
-def add_styret(conn, student_no, firstname, lastname, stilling, userid):
+def add_styret(conn, student_no, firstname, lastname, stilling, userid): 
     cur = conn.cursor()
     try:
         sql = ("INSERT INTO styret (student_no, firstname, lastname, stilling, userid) VALUES (?,?,?,?,?)")
         cur.execute(sql, (student_no, firstname, lastname, stilling, userid))
         conn.commit()
     except Error as err:
-        print("Error: {}".format(err))
+        log_file("Error: {}".format(err))
     else:
-        print("{} {} added to styret as {}.".format(firstname, lastname, stilling))
+        log_file("{} {} added to styret as {}.".format(firstname, lastname, stilling))
     finally:
         cur.close()
 
-# Get styremedlem from userid, returns 
+# Get styremedlem from userid, returns information about styret
 def get_mld(conn, userid):
     cur = conn.cursor()
     try:
@@ -265,7 +312,7 @@ def get_mld(conn, userid):
                 "userid": userid
             }
         else:
-            print("no user with that user id styret")
+            log_file("no user with that user id styret")
             return {
                 "studentno": None,
                 "firstname": None,
@@ -274,12 +321,43 @@ def get_mld(conn, userid):
                 "userid": userid
             }
     except Error as err:
-        print("Error: {}".format(err))
+        log_file("Error: {}".format(err))
     finally:
         cur.close()
 
+def get_all(conn):
+    cur = conn.cursor()
+    try:
+        sql = ("SELECT student_no, firstname, lastname, stilling, userid FROM styret")
+        cur.execute(sql)
+        for row in cur:
+            (student_no, firstname, lastname, stilling, userid) = row
+            return {
+                "studentno": student_no,
+                "firstname": firstname,
+                "lastname": lastname,
+                "stilling": stilling,
+                "userid": userid
+            }
+        else:
+            log_file("no user with that user id styret")
+            return {
+                "studentno": None,
+                "firstname": None,
+                "lastname": None,
+                "stilling": None,
+                "userid": userid
+            }
+    except Error as err:
+        log_file("Error: {}".format(err))
+    finally:
+        cur.close()
 
+# ---- INNLEGG ----
 # Insert innlegg into database, which returns the post_id
+# The place, link and title is default set to an empty string
+# Place is only inserted for companys, title is only for admin, and inks are optional for both company and admin.
+# Type is set to "innlegg" as a default value as the companys choose between differet types with select
 def make_post(conn, text, date, user, type="innlegg", place="", link="", title=""):
     cur = conn.cursor()
     try:
@@ -287,16 +365,15 @@ def make_post(conn, text, date, user, type="innlegg", place="", link="", title="
         cur.execute(sql, (text, date, place, type, link, title, user))
         conn.commit()
     except Error as err:
-        print("Error: {}".format(err))
+        log_file("Error: {}".format(err))
         return -1
     else:
-        print("Post of type {} created with id {}.".format(type, cur.lastrowid))
+        log_file("Post of type {} created with id {}.".format(type, cur.lastrowid))
         return cur.lastrowid
     finally:
         cur.close()
 
 # Get posts from database and return them in a list
-# ma kanskje returnere tom liste hvis error?
 def get_post(conn):
     cur = conn.cursor()
     try:
@@ -319,7 +396,7 @@ def get_post(conn):
             posts = posts[::-1]
         return posts
     except Error as err:
-        print("Error: {}".format(err))
+        log_file("Error: {}".format(err))
     finally:
         cur.close()
 
@@ -332,10 +409,12 @@ def delete_post(conn, post_id):
         conn.commit()
         return "Deleted"
     except Error as err:
-        print("Error: {}".format(err))
+        log_file("Error: {}".format(err))
     finally:
         cur.close()   
 
+
+# ---- AVTALER ----
 # Insert deals into database, which returns the id of the deal
 def create_deals(conn, type, owner, price, start_date, end_date, bid):
     cur = conn.cursor()
@@ -344,14 +423,15 @@ def create_deals(conn, type, owner, price, start_date, end_date, bid):
         cur.execute(sql, (type, owner, price, start_date, end_date, bid))
         conn.commit()
     except Error as err:
-        print("Error: {}".format(err))
+        log_file("Error: {}".format(err))
         return -1
     else:
-        print("Deal of type {} created with id {} for company with id {}.".format(type, cur.lastrowid, bid))
+        log_file("Deal of type {} created with id {} for company with id {}.".format(type, cur.lastrowid, bid))
         return cur.lastrowid
     finally:
         cur.close()
 
+# Get all deals and order them by type
 def get_deals(conn):
     cur = conn.cursor()
     try:
@@ -371,7 +451,7 @@ def get_deals(conn):
             })
         return avtaler
     except Error as err:
-        print("Error: {}".format(err))
+        log_file("Error: {}".format(err))
     finally:
         cur.close()
 
@@ -395,7 +475,7 @@ def get_deals_by_bid(conn, bid):
             })
         return avtaler
     except Error as err:
-        print("Error: {}".format(err))
+        log_file("Error: {}".format(err))
     finally:
         cur.close()
 
@@ -415,13 +495,16 @@ def setup():
     add_styret(conn, STYRET["Leder"][0], STYRET["Leder"][1], STYRET["Leder"][2], STYRET["Leder"][3], leder)
     add_styret(conn, STYRET["Nestleder"][0], STYRET["Nestleder"][1], STYRET["Nestleder"][2], STYRET["Nestleder"][3], nest)
 
-    # Add static companies
+    # Add companies
     bed_user1 = add_user(conn,"sopra", generate_password_hash("123"))
     bed_user2 = add_user(conn,"kongsberg", generate_password_hash("1234"))
-    bed1 = add_company(conn, "Sopra Steria", 91999801, "Address 2", "mina@mail.com", "/static/img/sopra.png", bed_user1)
-    bed2 = add_company(conn, "Kongsberg Digital", 91999801, "Address 54", "mina@mail.com", "/static/img/kongsberg.jpg", bed_user2)
+    bed1 = add_company(conn, "Sopra Steria", 91999801, "Address 2", "mina@mail.com", bed_user1)
+    bed2 = add_company(conn, "Kongsberg Digital", 91999801, "Address 54", "mina@mail.com", bed_user2)
 
-    # Add static posts
+    # Add img to company
+    add_img(conn, "/static/img/bedrifter/img1.png", bed1)
+
+    # Add posts
     # Stillingsannonser
     make_post(conn, "Vi i Sopra Steria soker nye fulltidsansatte. Mer informasjon paa linken!", "12.april 2021", bed_user1, "Heltid", "Asker")
     make_post(conn, "Perfekt jobb for deg som liker aa programmere!", "23.juni 2021", bed_user2, "Deltid", "Stavanger")
@@ -430,18 +513,10 @@ def setup():
     make_post(conn, "Hei, alle Data og elektro studenter! Har DU lyst å være med på Wings for Life World Run og få en goodiebag?️ Søndag 9. mai kl 13:00 går startskuddet for Wings for Life World Run 2021. Wings for Life World Run er verdens eneste globale veldedighetsløp der startskuddet går likt over hele kloden. 100% av deltakeravgiften går direkte til organisasjonen Wings for Life som jobber med å gjøre ryggmargskader kurerbare. Meld deg på her:", "2021/05/04", leder, "innlegg", "", "https://www.wingsforlifeworldrun.com/en/locations/app", "Wings For Life")
     make_post(conn, "Bli med og få en skikkelig kino goodiebag!! Filmen er Hangover, og vil bli vist torsdag 13.mai klokken 20:00.", "2021/05/09", nest, "innlegg", "", "https://forms.gle/XiBvDKsN8atw92hr6", "NETFLIX PARTY!")
 
-    #Add static deals
+    #Add deals
     create_deals(conn, "Samarbeidsavtale", "LED & ISI", "70 000", "30.02.2021", "30.02.2022", bed2)
     create_deals(conn, "Bedriftspresentasjon", "LED", "15 000", "22.03.2021", "22.06.2022", bed2)
     create_deals(conn, "Samarbeidsavtale", "LED", "40 000", "02.04.2021", "02.04.2022", bed1)
-
-    print(get_deals_by_bid(conn, bed2))
-
-    #edit_company_info(conn, 2, "Mina", 91999801, "Address 54", "mina@mail.com", "/static/img/kongsberg.jpg")
- 
-    # print(get_post(conn))
-    # print(delete_post(conn, 1))
-    # print(get_post(conn))
 
 if __name__ == "__main__":
     setup()

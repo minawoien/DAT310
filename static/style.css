@@ -3,17 +3,36 @@
     padding: 0;
 }
 
+html, body {
+    height: 100%;
+}
+
+#app {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
 body {
     background-color: #dfe2e4;
     font-family: Arial, Helvetica, sans-serif;
 }
 
+/* Styling for flere bokser */
 .pages, .companyP {
     display: flex;
     flex-wrap: wrap;
-    margin: auto;
-    width: 85%;
     padding-top: 20px;
+}
+
+.pages, .companyP, .tittel, ul {
+    width: 85%;
+    margin: auto;
+}
+
+#comp, .pages{
+    flex: 1 0 auto; 
+    margin-bottom: 100px;
 }
 
 #footerbox, .fbox, .innlegg, .annonser, .login, .bedInfo, .publish, #deal, .adminDeal, .image {
@@ -21,20 +40,25 @@ body {
 }
 
 a {
-    color: #075564
+    color: #075564;
+}
 
+form p {
+    color: #049893;
 }
 
 /* Syling input fields from different pages */
-
 input, select, textarea, button{
     width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
     display: inline-block;
-    border: 1px solid #ccc;
+    border: 2px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
+}
+
+.bedInfo p, .bedInfo h3, input, select, textarea, button {
+    padding: 12px 20px;
+    margin: 8px 0;
 }
 
 input[type=submit]{
@@ -45,7 +69,6 @@ button {
     background-color: #60a2a7;
 }
 
-/* Main page and student */
 .content, fieldset {
     justify-content: space-between;
 }
@@ -55,13 +78,12 @@ button {
 }
 
 /* FOOTER */
-
 #footerbox {
     border-top: 5px solid #74d2cc;
     text-align: center;
     display: flex;
-    flex-wrap: wrap;
-    margin-top: 100px;
+    flex-shrink: 0;
+    z-index: 1;
 }
 
 .fbox{
@@ -71,28 +93,35 @@ button {
     text-align: center;
 }
 
-.fbox a{
+.fbox a, .link{
     color:#000000;
 }
 
 /* MAIN PAGE */
-
 #main{
     position: absolute;
     top:0;
     bottom: 0;
     width: 100%;
+    height: 100%;
     background-image: url("/static/img/led_rom_blur.jpg");
     background-repeat: no-repeat;
     background-color: #dfe2e4;
     background-size: cover;
 }
 
-#main img{
-    position: relative;
+#small{
+    position: absolute;
     top: 35%;
     left: 35%;
+}
+
+.right, .bedInfo img, #small, .annonser{
     width: 30%;
+}
+
+#no {
+    min-height: 86%;
 }
 
 /* MENU */
@@ -100,8 +129,6 @@ ul {
     position: relative;
     z-index:10;
     list-style-type: none;
-    width: 85%;
-    margin: auto;
 }
 
 .link {
@@ -110,7 +137,6 @@ ul {
     padding-bottom: 1%;
     font-size: 1.2em;
     text-decoration: none;
-    color: #000000;
 
     /* Tatt fra w3schools */
     background-image: linear-gradient(#049893, #049893);
@@ -121,12 +147,10 @@ ul {
 }
 
 .router-link-active {
-    /* border-bottom: 7px solid #049893; */
     background-size: 100% 5px, auto;
 }
 
 .link:hover{
-    /* background-size: 100% 5px, auto; */
     color: #74d2cc;
 }
 
@@ -137,24 +161,23 @@ ul a img {
 
 
 /* STUDENT PAGE */
-
-/* Innlegg */
-
 .innlegg, .annonser, .login{
     padding: 2%;
+    margin-bottom: 2%;
 }
 
-.innlegg {
+.innlegg, .publish {
     width: 60%;
 }
 
-.annonser {
-    width: 30%;
+.innlegg h1, .annonser h1{
+    margin-bottom: 20px;
 }
 
 .post{
     padding: 10px 0;
     line-height: 1.7;
+    border-top: 1px solid #dfe2e4;
 }
 
 .annonser form {
@@ -166,14 +189,14 @@ fieldset {
     border: none;
     display: flex;
     width: 100%;
-    padding: 10px 20px;
+    padding: 10px 10px;
     box-sizing: border-box;
 }
 
 input[type=checkbox] {
     margin-right: 5px;
+    width: 25px;
 }
-
 
 /* LOGIN PAGE */
 .login {
@@ -187,41 +210,25 @@ input[type=checkbox] {
 
 
 /* MY PAGE */
-.bedInfo, .publish, #deal {
+.bedInfo, .publish, .adminDeal {
     padding: 3%;
 }
 
-.publish {
-    width: 60%;
-}
-
-.bedInfo{
-    margin-bottom: 20px;
-}
-
-.bedInfo p, .bedInfo h3 {
-    padding: 12px 20px;
-    margin: 8px 0;
-}
-
-.right, .bedInfo img {
-    width: 30%;
+.bedInfo, .deals div{
+    margin-bottom: 25px;
 }
 
 #deal {
     padding: 10%;
 }
 
+.deals {
+    padding-top: 20px;
+}
 
 /* ADMIN */
 .adminDeal{
     width: 25%;
-    padding: 3%;
-}
-
-.tittel {
-    width: 85%;
-    margin: auto;
 }
 
 /* COMPANY */
@@ -239,7 +246,6 @@ input[type=checkbox] {
 #desc, .image img  {
     height: 100px;
 }
-
 
 /* Icon */
 .editIcon {
@@ -276,8 +282,11 @@ input[type=checkbox] {
     float: right;
 }
 
+@media only screen and (max-width: 1000px) {
 
-@media only screen and (max-width: 800px) {
+    #no {
+        min-height: 89%;
+    }
 
     #main{
         background-position: 50%;
@@ -288,22 +297,34 @@ input[type=checkbox] {
         left: 25%;
     }
 
-}
-
-@media only screen and (max-width: 600px) {
-    .innlegg, .annonser, .publish, .right{
-        width: 90%;
-        margin: auto;
-        margin-bottom: 20px;
-        padding: 3%;
+    .innlegg, .annonser, .publish, .right, .adminDeal{
+        width: 100%;
     }
 
-    #main{
-        background-position: 50%;
+    .login {
+        width: 70%
     }
 
-    #main img{
-        width: 80%;
-        left: 10%;
+    .publish, .innlegg, .deals div {
+        margin-bottom: 25px;
     }
+
+    #deal {
+        padding: 5%;
+    }
+
+    .deals {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .deals div{
+        width: 45%;
+        padding-right: 5%;
+    }
+
+    ul a img {
+        width: 120px;
+    }
+
 }

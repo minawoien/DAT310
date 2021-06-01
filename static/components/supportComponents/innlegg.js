@@ -11,6 +11,7 @@ const annonseC = {
     </div>
 `,
     methods: {
+        // Kaller på parent funksjonen i student for å slette en annonse
         deletePost: function(id){
             this.$parent.deletePost(id);
         }
@@ -30,6 +31,7 @@ const innleggC = {
     </div>
 `,
     methods: {
+        // Kaller på parent funksjonen i student for å slette et innlegg
         deletePost: function(id){
             this.$parent.deletePost(id);
         }

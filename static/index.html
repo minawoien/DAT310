@@ -15,7 +15,7 @@
         <div id="app">
             <top-menu v-bind:bruker="user"></top-menu>
             <router-view v-bind:bruker="user"></router-view>
-            <footerbox v-bind:bruker="user"></footerbox>
+            <footerbox></footerbox>
         </div>
         <script src="/static/components/main.js"></script>
         <script src="/static/components/student.js"></script>
@@ -23,12 +23,13 @@
         <script src="/static/components/mypage.js"></script>
         <script src="/static/components/login.js"></script>
         <script src="/static/components/admin.js"></script>
+        <script src="/static/components/error.js"></script>
 
-        <script src="/static/components/footer.js"></script>
-
-        <script src="/static/components/innlegg.js"></script>
-        <script src="/static/components/menu.js"></script>
-
+        <script src="/static/components/supportComponents/menu.js"></script>
+        <script src="/static/components/supportComponents/footer.js"></script>
+        <script src="/static/components/supportComponents/innlegg.js"></script>
+        <script src="/static/components/supportComponents/publish_annonse.js"></script>
+        
         <script src="/static/router.js"></script>
     </body>
     

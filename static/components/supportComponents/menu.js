@@ -18,9 +18,11 @@ let menuC = {
     </header>
     `,
     methods: {
+        // Kaller på parent funksjonen i router for å logge ut
         logout: function(){
             this.$parent.logout();
         },
+        // Sendes til hjem hvis logoen blir klikket på
         home: function(){
             router.push("/")
         }

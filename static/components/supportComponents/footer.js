@@ -1,5 +1,5 @@
 let footerC = {
-    props: ["bruker"],
+    
     template: /*html*/`
         <div id="footerbox" class="center">
             <div class="fbox">

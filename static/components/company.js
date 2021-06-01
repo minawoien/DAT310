@@ -14,7 +14,6 @@ let companyC = {
                 <img :src="deal.bid['filename']"/>
             </div>
         </div>
-        
     </div>
 
     `,
@@ -25,6 +24,9 @@ let companyC = {
         }
     },
     created: async function(){
+        // Henter bedrifter som har avtaler med LED. Sorterer de etter om de har enten samarbeidsavtale eller
+        // bedriftspresentasjon ved å sjekke avtale-typen og putte de i forskjellige lister.
+        // Bedrifter som ikke har lastet opp bilde får et default-bilde.
         let request = await fetch('/alleAvtaler');
         if (request.status == 200){
             let result = await request.json();
@@ -33,6 +35,9 @@ let companyC = {
                     this.samarbeid.push(result[deal])
                 }else{
                     this.presentasjon.push(result[deal])
+                }
+                if (result[deal].bid["filename"] == null){
+                    result[deal].bid["filename"] = "/static/img/noImg.png"
                 }
             }
         }

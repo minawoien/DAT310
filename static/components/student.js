@@ -1,7 +1,5 @@
-//const { throwStatement } = require("jscodeshift");
-
 let studentC = {
-    // property for the logged in user
+    // property for innlogget bruker
     props: ["bruker"],
     template: /*html*/`
     <div class="pages content">
@@ -41,17 +39,19 @@ let studentC = {
             selected: '',
             bedrifter: [],
             checkedTimes: [],
-            display: false,
-            liste: []
+            display: false
         }
     },
     created: async function(){
+        // Henter innlegg hver gang siden blir åpnet, sjekker om innleggene er stillingsannonser eller innlegg fra styret i 
+        // postType funksjonen
         let response = await fetch('/post');
         if (response.status == 200){
             let result = await response.json();
             this.posts = result;
         }
         this.postType();
+        // Heter filtreingscookie
         this.getCookie();
     },
     watch: {
@@ -60,16 +60,9 @@ let studentC = {
         }
     },
     methods: {
-        deletePost: async function(id){
-            console.log("deleting: ")
-            console.log(id)
-            let response = await fetch('/delete?post_id='+id);
-            if (response.status == 200){
-                let result = await response.json();
-                this.posts = result;
-                this.postType()
-            }
-        },
+        // Oppdaterer hvilke innlegg som vises ved å nullstille listene med innlegg fra styret og stillingsannonser,
+        // og legge til eksisterene innlegg i riktig liste ut i fra type
+        // Funksjonen blir kalt når admin sletter et innlegg, og hver gang siden åpnes (da det kan ha blitt lagt til flere innlegg)
         postType: function(){
             this.bedrifter = [];
             this.innlegg = [];
@@ -80,13 +73,55 @@ let studentC = {
                 }
                 else{
                     this.annonser.push(this.posts[p])
+                    // Legger til bedriftnavn til stillingsannonsene i nedtrekksliste for å kunne sortere annonense etter bedriftnavn
                     if (!this.bedrifter.includes(this.posts[p].userid['name'])){
                         this.bedrifter.push(this.posts[p].userid['name'])
                     }
                 }
             }
         },
-        // Funksjon for sortering av type stilling 
+        // Sletter innlegg eller annonse med gitt id og oppdaterer hvilke innlegg som vises i postType-funksjonen
+        deletePost: async function(id){
+            let response = await fetch('/delete?post_id='+id);
+            if (response.status == 200){
+                let result = await response.json();
+                this.posts = result;
+                this.postType()
+            }
+        },
+        // Setter en cookie på en dictionary med hvilke filtreringer som er valgt, og setter den som permanet
+        // (cookien blir kun slettet når en bruker logger ut)
+        setCookie: function(){
+            let data = {
+                "selected": this.selected,
+                "inpSearch": this.inpSearch,
+                "checkedTimes": this.checkedTimes 
+            }
+            document.cookie = "list="+JSON.stringify(data)+";SameSite=strict;max-age=31536000;";
+        },
+        // Henter cookie og spliter så vi får dictionaryen og kan fordele valgene på filtreringen
+        // Kilde: https://www.w3schools.com/js/js_cookies.asp
+        getCookie: function(){
+            var name =  "list=";
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var ca = decodedCookie.split(';');
+            for(var i = 0; i <ca.length; i++) {
+              var c = ca[i];
+              while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+              }
+              if (c.indexOf(name) == 0) {
+                let data = JSON.parse(c.substring(name.length, c.length))
+                this.selected = data.selected;
+                this.inpSearch = data.inpSearch;
+                this.checkedTimes = data.checkedTimes;
+              }
+            }
+        },
+        filter: function(){
+            this.display = !this.display
+        },
+        // Funksjon for sortering av type stilling og søk i tekst
         // Hvis alle eller ingen er valgt blir kun sortering på søk returnert
         typeAndSearch: function(p){
             if (this.checkedTimes.length == 1){
@@ -96,21 +131,11 @@ let studentC = {
             }else{
                 return p.text.toLowerCase().includes(this.inpSearch.toLowerCase())   
             }
-        },
-        filter: function(){
-            this.display = !this.display
-        },
-        setCookie: function(){
-            // Set cookie with expiration date after a year
-            document.cookie = "list="+this.filteredList+";SameSite=strict;max-age=31536000;";
-        },
-        getCookie: function(){
-            console.log("heiiiiiii");
         }
     },
     computed: {
         // Sortering på søk, bedriftnavn og stillingstype
-        // TypeAndSearch funskjonen returnerer annonsene sortert etter søk og type
+        // Kaller TypeAndSearch funskjonen returnerer annonsene sortert etter søk og type
         filteredList() {
           return this.annonser.filter(p => {
             if (this.selected) {
@@ -122,5 +147,4 @@ let studentC = {
           })
         }
     }
-
 };
