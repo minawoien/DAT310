@@ -23,7 +23,7 @@ def valid_login(username, password):
     return False
 
 # Funskjon som sjekker brukerinput
-# Alle input må ha mer enn 3 tegn, med unntak av telfon og passord som må ha 8.
+# Alle input må ha mer enn 3 tegn, med unntak av telefon og passord som må ha 8.
 def validate_userinput(userinput, key):
     # List with special characters that are not allowed in input field
     avoid = ['#', '$', '%', '=', '{', '}', '[', ']', '\\', '*', '^', '¨', '~', '§', '>', '<']
@@ -44,6 +44,7 @@ def validate_userinput(userinput, key):
     return "Ok"
 
 # Funksjon som sjekker om det er et innlegg eller en stillingsannonse
+# Finner styremedlem eller bedrift og setter dictionarien som verdi for userid
 def innleggType(conn, innlegg):
     for post in innlegg:
         if post["type"] == "innlegg":
@@ -55,7 +56,7 @@ def innleggType(conn, innlegg):
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-# Funskjon som sjekker om det ligger et ekisterende bilde med et annet format for bedriften - og sletter det
+# Funskjon som sjekker om det ligger et ekisterende bilde med et annet format for bedriften og sletter det
 def delete_exsisting(conn, bid):
     company = get_company_by_bid(conn, bid)
     if company["filename"] != None:

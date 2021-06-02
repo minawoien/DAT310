@@ -18,7 +18,7 @@ let mypageC = {
             </div>
             <form action="#" method="POST"  v-on:submit="edit" v-if="display" class="bedEdit" autocomplete="off">
                 <input type="text" name="name" v-model="name" :placeholder="comp.name"/><br />
-                <input type="number" name="phone" v-model="phone" :placeholder="comp.phone_numb"/><br />
+                <input type="number" name="phone" v-model="phone" :placeholder="comp.phone_numb" min="0" max="99999999"/><br />
                 <input type="text" name="address" v-model="address" :placeholder="comp.address"/><br />
                 <input type="email" name="mail" v-model="mail" :placeholder="comp.mail"/><br />
                 <input type="file" @change="onFileSelected"/>

@@ -144,7 +144,7 @@ ul {
     font-size: 1.2em;
     text-decoration: none;
 
-    /* Tatt fra w3schools */
+    /* Kilde: w3schools */
     background-image: linear-gradient(#049893, #049893);
     background-size: 0 7px, auto;
     background-repeat: no-repeat;
@@ -289,7 +289,6 @@ input[type=checkbox] {
 }
 
 @media only screen and (max-width: 1000px) {
-
     #no {
         min-height: 89%;
     }

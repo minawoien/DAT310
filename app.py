@@ -84,11 +84,13 @@ def register():
             return jsonify(text)
 
     hash = generate_password_hash(password)
+    # Legger til bruker i databasen, add_user-funksjonen returnerer -1 dersom brukernavnet allerede 
+    # eksisterer.
     id = add_user(conn, username, hash)
     if id == -1:
         return jsonify("Brukernavnet er allerede tatt!")
 
-    # Legger til bedriften i bedrift-tabell
+    # Legger til bedriften i bedrift-tabellen
     add_company(conn, user_form["Bedriftnavn"], user_form["Telefon"], user_form["Adresse"], user_form["Mail"], id)
 
     return jsonify("Sucess")
@@ -129,12 +131,13 @@ def getInnlegg():
     innleggType(conn, innlegg)
     return jsonify(innlegg)
 
-# Sletter innlegg eller stillingsannonser, returnerer innleggene
+# Sletter innlegg eller stillingsannonser, henter de resterende innleggene, sjekker type-innlegg og
+# returnerer innleggene
 @app.route("/delete", methods=["POST"])
 def delete():
     conn = get_db()
     post_id = request.get_json()
-    message = delete_post(conn, post_id["id"])
+    delete_post(conn, post_id["id"])
     innlegg = get_post(conn)
     innleggType(conn, innlegg)
     return jsonify(innlegg)

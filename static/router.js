@@ -1,3 +1,5 @@
+// Lager de ulike routes, brukeren blir sendt til /404 hvis brukeren ikke har tilgang til en side
+// eller dersom siden ikke eksisterer
 const routes = [
     { path: '/', component: mainC},
     { path: '/studenter', component: studentC},
@@ -5,15 +7,14 @@ const routes = [
     { path: '/minSide', component: mypageC},
     { path: '/logginn', component: loginC},
     { path: '/styret', component: adminC},
-    { path: '/404', component: errorC}
+    { path: '/404', component: errorC},
+    { path: '/:pathMatch(.*)', component: errorC}
 ];
-
 
 const router = VueRouter.createRouter({
     history: VueRouter.createWebHashHistory(),
     routes: routes
 });
-
 
 let app = Vue.createApp({
     data: function(){

@@ -1,3 +1,4 @@
+// komponent for stillingsannonse
 const annonseC = {
     props: ["bruker", "p"],
     template: /*html*/`
@@ -11,13 +12,14 @@ const annonseC = {
     </div>
 `,
     methods: {
-        // Kaller på parent funksjonen i student for å slette en annonse
+        // Kaller på parent-funksjonen i student for å slette en annonse
         deletePost: function(id){
             this.$parent.deletePost(id);
         }
     }
 };
 
+// komponent for innlegg fra styret
 const innleggC = {
     props: ["bruker", "p"],
     template: /*html*/`
@@ -31,7 +33,7 @@ const innleggC = {
     </div>
 `,
     methods: {
-        // Kaller på parent funksjonen i student for å slette et innlegg
+        // Kaller på parent-funksjonen i student for å slette et innlegg
         deletePost: function(id){
             this.$parent.deletePost(id);
         }

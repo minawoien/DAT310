@@ -18,7 +18,7 @@ let menuC = {
     </header>
     `,
     methods: {
-        // Kaller på parent funksjonen i router for å logge ut
+        // Kaller på parent-funksjonen i router for å logge ut
         logout: function(){
             this.$parent.logout();
         },

@@ -104,7 +104,7 @@ let studentC = {
             }
         },
         // Setter en cookie på en dictionary med hvilke filtreringer som er valgt, og setter den som permanet
-        // Lagrer kun id for bedriften som er valgt da en bedrift har mulighet for å endre bedriftnavn
+        // Lagrer kun id for bedriften som er valgt i cookien, da en bedrift har mulighet for å endre bedriftnavn
         // (cookien blir kun slettet når en bruker logger ut)
         setCookie: function(){
             let data = {

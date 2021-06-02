@@ -61,6 +61,7 @@ table_post = """CREATE TABLE innlegg(
                     FOREIGN KEY (userid) REFERENCES users (userid)
                 );"""
 
+# Error meldinger og oppdateringer fra databasen blir lagt til i filen log.txt
 def log_file(text):
     with open("log.txt", "a") as myfile:
         myfile.write(text)
@@ -87,7 +88,7 @@ def create_table(conn, table):
 
 
 # ---- USERS ----
-# Add users to database
+# Legger til brukere i databasen, rolle er satt default til "user", returnerer userid
 def add_user(conn, username, hash, role="user"):
     cur = conn.cursor()
     try:
@@ -128,7 +129,7 @@ def get_user_by_name(conn, username):
     finally:
         cur.close()
 
-# Get user details from id
+# Get user details from username
 def get_hash_for_login(conn, username):
     cur = conn.cursor()
     try:
@@ -146,7 +147,7 @@ def get_hash_for_login(conn, username):
 
 
 # ---- COMPANY ----
-# Adds the users company to database
+# Adds the users company to database, returns companyid
 def add_company(conn, name, phone, address, mail, id):
     cur = conn.cursor()
     try:
@@ -196,7 +197,7 @@ def get_company(conn, userid):
     finally:
         cur.close()
 
-# Get company information from bedriftid
+# Get company information from companyid
 def get_company_by_bid(conn, bid):
     cur = conn.cursor()
     try:
@@ -282,7 +283,7 @@ def get_img_from_bid(conn, bid):
 
 
 # ---- STYRET ----
-# Add users as styret (admin) to the database, only done static
+# Add users as styret (admin) to the database, only done static by running this file
 def add_styret(conn, student_no, firstname, lastname, stilling, userid): 
     cur = conn.cursor()
     try:
@@ -325,38 +326,10 @@ def get_mld(conn, userid):
     finally:
         cur.close()
 
-def get_all(conn):
-    cur = conn.cursor()
-    try:
-        sql = ("SELECT student_no, firstname, lastname, stilling, userid FROM styret")
-        cur.execute(sql)
-        for row in cur:
-            (student_no, firstname, lastname, stilling, userid) = row
-            return {
-                "studentno": student_no,
-                "firstname": firstname,
-                "lastname": lastname,
-                "stilling": stilling,
-                "userid": userid
-            }
-        else:
-            log_file("no user with that user id styret")
-            return {
-                "studentno": None,
-                "firstname": None,
-                "lastname": None,
-                "stilling": None,
-                "userid": userid
-            }
-    except Error as err:
-        log_file("Error: {}".format(err))
-    finally:
-        cur.close()
-
 # ---- INNLEGG ----
 # Insert innlegg into database, which returns the post_id
 # The place, link and title is default set to an empty string
-# Place is only inserted for companys, title is only for admin, and inks are optional for both company and admin.
+# Place is only inserted for companys, title is only for admin, and links are optional for both company and admin.
 # Type is set to "innlegg" as a default value as the companys choose between differet types with select
 def make_post(conn, text, date, user, type="innlegg", place="", link="", title=""):
     cur = conn.cursor()
@@ -406,7 +379,6 @@ def delete_post(conn, post_id):
         sql = "DELETE FROM innlegg WHERE post_id=?"
         cur.execute(sql, (post_id,))
         conn.commit()
-        return "Deleted"
     except Error as err:
         log_file("Error: {}".format(err))
     finally:
