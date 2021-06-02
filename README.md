@@ -1,7 +1,7 @@
-# For å kjøre nettsiden: 
-- Kjør setup_db.py
-- Kjør app.py
+Databasen er inkludert i zip-fil, men ikke på github
 
+# For å kjøre nettsiden:
+- Kjør app.py
 
 # Lagde brukere 
 - Admin login:
@@ -111,7 +111,7 @@ Uten bruker:
 - Lage bedriftbruker
 
 
-# I databasen som blir lagd når setup_db.py kjøres og databasen blir lagd
+# I databasen som blir lagd når setup_db.py kjøres og databasen blir lagd (Trenger ikke kjøres)
 - Fire brukere
 - To adminbrukere med et innlegg hver
 - To bedrifter med en stillingsannonse hver
