@@ -40,7 +40,7 @@ body {
     padding-bottom: 100px;
 }
 
-#footerbox, .fbox, .innlegg, .annonser, .login, .bedInfo, .publish, #deal, .adminDeal, .image {
+#footerbox, .fbox, .innlegg, .annonser, .login, .bedInfo, .publish, #deal, .adminDeal, .image, .bedEdit {
     background-color: #ffffff;
 }
 
@@ -61,10 +61,11 @@ input, select, textarea, button{
     box-sizing: border-box;
 }
 
-.bedInfo p, .bedInfo h3, input, select, textarea, button {
+.bedInfo p, .bedInfo h3, input, select, textarea, button{
     padding: 12px 20px;
     margin: 8px 0;
 }
+
 
 input[type=submit]{
     background-color: #74d2cc;
@@ -215,11 +216,11 @@ input[type=checkbox] {
 
 
 /* MY PAGE */
-.bedInfo, .publish, .adminDeal {
+.bedInfo, .publish, .adminDeal, .bedEdit {
     padding: 3%;
 }
 
-.bedInfo, .deals div{
+.bedInfo, .deals div, .bedEdit{
     margin-bottom: 25px;
 }
 
@@ -283,7 +284,7 @@ input[type=checkbox] {
     vertical-align: -0.125em;
 }
 
-.removeIcon, #searchIcon, .deleteIcon, .bedInfo span, .bedInfo img, .link    {
+.removeIcon, #searchIcon, .deleteIcon, .bedInfo span, .bedInfo img, .link, .bedEdit span   {
     float: right;
 }
 

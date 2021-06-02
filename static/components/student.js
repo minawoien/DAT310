@@ -20,7 +20,7 @@ let studentC = {
                 </fieldset>
                 <select v-model="selected">
                     <option selected value="">Velg bedrift</option>
-                    <option v-for="p in bedrifter" :value="p">{{p}}</option>
+                    <option v-for="p in bedrifter" :value="p">{{p.name}}</option>
                 </select>
             </form>
             <h1>Stillingsannonser</h1>
@@ -55,9 +55,11 @@ let studentC = {
         this.getCookie();
     },
     watch: {
+        // Setter cookie ettersom listen med stillingsannonser blir filtrert
         filteredList: function(){
             this.setCookie();
         }
+
     },
     methods: {
         // Oppdaterer hvilke innlegg som vises ved å nullstille listene med innlegg fra styret og stillingsannonser,
@@ -73,10 +75,16 @@ let studentC = {
                 }
                 else{
                     this.annonser.push(this.posts[p])
-                    // Legger til bedriftnavn til stillingsannonsene i nedtrekksliste for å kunne sortere annonense etter bedriftnavn
-                    if (!this.bedrifter.includes(this.posts[p].userid['name'])){
-                        this.bedrifter.push(this.posts[p].userid['name'])
+                    // Legger til navn og id til bedriftene som har lagt ut stillingsannonser i en liste som blir brukt til 
+                    // nedtrekksliste for filtrering.
+                    // Hvis en bedirft har publisert mer enn en annonse vil bedriftnavnet bare vist en gang i nedtrekkslisten
+                    if(!this.bedrifter.some(bedrift => bedrift.name == this.posts[p].userid["name"])){
+                        this.bedrifter.push({
+                            "name": this.posts[p].userid['name'],
+                            "bid": this.posts[p].userid['bid']
+                        })
                     }
+
                 }
             }
         },
@@ -96,16 +104,17 @@ let studentC = {
             }
         },
         // Setter en cookie på en dictionary med hvilke filtreringer som er valgt, og setter den som permanet
+        // Lagrer kun id for bedriften som er valgt da en bedrift har mulighet for å endre bedriftnavn
         // (cookien blir kun slettet når en bruker logger ut)
         setCookie: function(){
             let data = {
-                "selected": this.selected,
+                "selected": this.selected["bid"],
                 "inpSearch": this.inpSearch,
                 "checkedTimes": this.checkedTimes 
             }
             document.cookie = "list="+JSON.stringify(data)+";SameSite=strict;max-age=31536000;";
         },
-        // Henter cookie og spliter så vi får dictionaryen og kan fordele valgene på filtreringen
+        // Henter cookie og spliter så vi får dictionarien og kan fordele valgene på filtreringen
         // Kilde: https://www.w3schools.com/js/js_cookies.asp
         getCookie: function(){
             var name =  "list=";
@@ -118,9 +127,18 @@ let studentC = {
               }
               if (c.indexOf(name) == 0) {
                 let data = JSON.parse(c.substring(name.length, c.length))
-                this.selected = data.selected;
-                this.inpSearch = data.inpSearch;
-                this.checkedTimes = data.checkedTimes;
+                // Finner navnet på bedriften som er valgt ut i fra lagret bedriftid, og setter id og navn som selected for nedtrekkslisten
+                for (j in this.bedrifter){
+                    if (data.selected == this.bedrifter[j].bid){
+                        this.selected = {
+                            "name": this.bedrifter[j].name,
+                            "bid": this.bedrifter[j].bid
+                         }
+                    }
+                 }
+                 // Setter lagret søk og hvilke/n checkbox 
+                 this.inpSearch = data.inpSearch;
+                 this.checkedTimes = data.checkedTimes;
               }
             }
         },
@@ -128,7 +146,7 @@ let studentC = {
             this.display = !this.display
         },
         // Funksjon for sortering av type stilling og søk i tekst
-        // Hvis alle eller ingen er valgt blir kun sortering på søk returnert
+        // Hvis alle eller ingen type er valgt blir kun sortering på søk returnert
         typeAndSearch: function(p){
             if (this.checkedTimes.length == 1){
                 return p.type.includes(this.checkedTimes) && p.text.toLowerCase().includes(this.inpSearch.toLowerCase()) 
@@ -141,11 +159,12 @@ let studentC = {
     },
     computed: {
         // Sortering på søk, bedriftnavn og stillingstype
-        // Kaller TypeAndSearch funskjonen returnerer annonsene sortert etter søk og type
+        // Sjekker først om det er valgt en bedrift, før typeAndSearch funksjonen sjekker om det er valgt en type stilling 
+        // og/eller om det er gjort et søk i teksten
         filteredList() {
           return this.annonser.filter(p => {
             if (this.selected) {
-                this.show = p.userid['name'].includes(this.selected) && this.typeAndSearch(p)
+                this.show = p.userid['name'].includes(this.selected["name"]) && this.typeAndSearch(p)
             }else{
                 this.show = this.typeAndSearch(p)
             }

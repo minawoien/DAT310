@@ -16,15 +16,15 @@ let mypageC = {
                 <p>{{comp.address}}</p>
                 <p>{{comp.mail}}</p>
             </div>
-            <form action="#" method="POST"  v-on:submit="edit" v-if="display" class="bedInfo" autocomplete="off">
+            <form action="#" method="POST"  v-on:submit="edit" v-if="display" class="bedEdit" autocomplete="off">
                 <input type="text" name="name" v-model="name" :placeholder="comp.name"/><br />
                 <input type="number" name="phone" v-model="phone" :placeholder="comp.phone_numb"/><br />
                 <input type="text" name="address" v-model="address" :placeholder="comp.address"/><br />
                 <input type="email" name="mail" v-model="mail" :placeholder="comp.mail"/><br />
                 <input type="file" @change="onFileSelected"/>
-                <p class="error">{{text}}</p>
+                <p>{{text}}</p>
                 <input type="submit" value="Ok"/>
-                <p class="error">{{editText}}</p>
+                <p>{{editText}}</p>
             </form>
             <div v-if="avtaler!=null" id="deal">
                 <h1>Mine avtaler</h1>
