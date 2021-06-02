@@ -111,7 +111,7 @@ Uten bruker:
 - Lage bedriftbruker
 
 
-# I databasen som blir lagd når setup_db.py kjøres og databasen blir lagd (Trenger ikke kjøres)
+# I databasen som blir lagd når setup_db.py kjøres og databasen blir lagd
 - Fire brukere
 - To adminbrukere med et innlegg hver
 - To bedrifter med en stillingsannonse hver
