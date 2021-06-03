@@ -127,3 +127,6 @@ Feilmeldinger og status fra setub_db.py blir lagt til i filen log.txt.
 #dfe2e4
 #74d2cc
 #60a2a7
+
+# Link til github
+https://github.com/minawoien/DAT310
