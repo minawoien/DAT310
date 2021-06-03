@@ -1,7 +1,10 @@
 Databasen er inkludert i zip-fil, men ikke på github
 
 # For å kjøre nettsiden:
-- Kjør app.py
+- Pillow må være installert:
+    - pip install Pillow // pip3 install Pillow
+- Kjør app.py:
+    - flask run
 
 # Lagde brukere 
 - Admin login:
