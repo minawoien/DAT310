@@ -14,6 +14,8 @@ let companyC = {
                 <img :src="deal.bid['filename']"/>
             </div>
         </div>
+        <p id="compP">På denne siden vises kun bedrifter som har avtaler med LED</p>
+        
     </div>
 
     `,
